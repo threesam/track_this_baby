@@ -1,0 +1,7 @@
+compatibility_date = "2023-04-19"
+main = "src/index.ts"
+name = "track_this_baby"
+
+kv_namespaces = [
+  {binding = "EVENTS", id = "6dd315574fdc44b9803780cabb6081b3", preview_id = "e5cb02b3d41e4ad7abd84e0b493cfce4"},
+]

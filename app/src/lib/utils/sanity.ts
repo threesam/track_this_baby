@@ -16,24 +16,31 @@ export const client = createClient({
 	apiVersion: '2023-03-20' // date of setup
 });
 
-export async function getPosts(): Promise<Post[]> {
+export async function getEvents(): Promise<Event[]> {
 	return await client.fetch(
-		groq`*[_type == "post" && defined(slug.current)] | order(_createdAt desc)`
+		groq`*[_type == "event" && defined(slug.current)] | order(_createdAt desc)`
 	);
 }
 
-export async function getPost(slug: string): Promise<Post> {
-	return await client.fetch(groq`*[_type == "post" && slug.current == $slug][0]`, {
+export async function getEvent(slug: string): Promise<Event> {
+	return await client.fetch(groq`*[_type == "event" && slug.current == $slug][0]`, {
 		slug
 	});
 }
 
-export interface Post {
-	_type: 'post';
+export async function updateEvent(slug: string): Promise<Event> {
+	return await client.fetch(groq`*[_type == "event" && slug.current == $slug][0]`, {
+		slug
+	});
+}
+
+export interface Event {
+	_type: 'event';
 	_createdAt: string;
 	title?: string;
 	slug: Slug;
 	excerpt?: string;
 	mainImage?: ImageAsset;
+	count?: number;
 	body: PortableTextBlock[];
 }

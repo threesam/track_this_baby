@@ -1,31 +1,37 @@
 <script lang="ts">
 	import { formatDate } from '$lib/utils';
 	import { urlFor } from '$lib/utils/image';
-	import type { Post } from '$lib/utils/sanity';
+	import type { Event } from '$lib/utils/sanity';
+	import {client} from '$lib/utils/sanity'
 
-	export let post: Post;
+	$: count = ''
+
+	async function countEvent(slug: string) {
+		const countRes = await fetch(`/worker?event=${slug}`, {method: 'POST'})
+		const text = await countRes.text()
+
+		count = text
+	}
+
+	export let event: Event;
 </script>
 
 <div class="card">
-	{#if post.mainImage}
+	<!-- {#if event.mainImage}
 		<img
 			class="card__cover"
-			src={urlFor(post.mainImage).width(500).height(300).url()}
-			alt="Cover image for {post.title}"
+			src={urlFor(event.mainImage).width(500).height(300).url()}
+			alt="Cover image for {event.title}"
 		/>
 	{:else}
 		<div class="card__cover--none" />
-	{/if}
+	{/if} -->
 
 	<div class="card__container">
 		<h3 class="card__title">
-			<a class="card__link" href={`/post/${post.slug.current}`}>
-				{post.title}
-			</a>
+			<button class="card__link" on:click={() => countEvent(event.slug.current)}>
+				{event.title} - {count}
+			</button>
 		</h3>
-		<p class="card__excerpt">{post.excerpt}</p>
-		<p class="card__date">
-			{formatDate(post._createdAt)}
-		</p>
 	</div>
 </div>

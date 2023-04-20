@@ -7,9 +7,9 @@
 </script>
 
 <section>
-	{#if data.posts.length}
-		{#each data.posts as post}
-			<Card {post} />
+	{#if data.events.length}
+		{#each data.events as event}
+			<Card {event} />
 		{/each}
 	{:else}
 		<Welcome />

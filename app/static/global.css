@@ -84,6 +84,7 @@ body {
 
 .post .post__container {
 	padding: 0 var(--space-3);
+	width: max-content;
 }
 
 .post .post__content {
